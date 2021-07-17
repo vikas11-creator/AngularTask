@@ -1,0 +1,139 @@
+<button type="button" class="btn btn-info mt-3 ml-4" data-toggle="modal" data-target="#exampleModalCenter">
+    Create Post
+</button>
+<div class="post mt-3 p-4">
+    <div class="card mb-3" *ngFor="let userPost of userPosts; index as i">
+        <div class="card-body">
+            <h5 class="card-title card-header mb-4">{{userPost.title}}</h5>
+            <h6 class="card-subtitle mb-2 ml-3 text-muted">Post</h6>
+            <p class="card-text ml-3">{{userPost.body}}</p>
+            <a class="btn btn-primary ml-3" (click)="loadComment(userPost.id,i)">Show Comments</a>
+            <div *ngIf="userPost.isCommentOpen">
+                <div class="card my-3" *ngFor="let userComment of userPost.comments">
+                    <div class="card-body">
+                        <h5 class="card-title">Name: {{userComment.name}}</h5>
+                        <h6 class="card-subtitle text-muted">Email: {{userComment.email}}</h6>
+                        <p class="card-text">Comment: {{userComment.body}}</p>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Create Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form [formGroup]="createFormPost">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" formControlName="input_name" class="form-control"
+                                placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" formControlName="input_email" class="form-control"
+                                placeholder="Enter Email">
+                            <div class="error text-danger"
+                                *ngIf="createFormPost.controls.input_email.dirty || createFormPost.controls.input_email.touched">
+                                <div *ngIf="createFormPost.controls.input_email.hasError('required')">
+                                    Email is required
+                                </div>
+                                <div *ngIf="createFormPost.controls.input_email.hasError('email')">
+                                    Email must be a valid email address
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" formControlName="input_title" class="form-control"
+                                placeholder="Enter Title">
+                            <div class="error text-danger"
+                                *ngIf="createFormPost.controls.input_title.dirty || createFormPost.controls.input_title.touched">
+                                <div *ngIf="createFormPost.controls.input_title.hasError('required')">
+                                    Title is required
+                                </div>
+                                <div *ngIf="createFormPost.controls.input_title.hasError('maxlength')">
+                                    Title must not exceed 15 digit.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Body</label>
+                            <input type="text" formControlName="input_body" class="form-control"
+                                placeholder="Enter Body">
+                        </div>
+                        <div>
+                            <div>
+                                <label>Publish</label>
+                                <input type="checkbox" data-toggle="toggle" (change)="updateText()" data-on="Publish"
+                                    data-off="Unpublish">
+                            </div>
+                            <div *ngIf="showDateTime">
+                                <div class="form-group">
+                                    <label>Publish Date</label>
+                                    <div class="input-group date" id="ExpDt" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                            data-target="#ExpDt" formControlName="publish_date"
+                                            placeholder="Select a Expected date" angular-mydatepicker
+                                            name="publish_date" [options]="myOptions" #dp="angular-mydatepicker" />
+                                        <div class="input-group-append" data-target="#ExpDt"
+                                            data-toggle="datetimepicker">
+                                            <div class="input-group-text" (click)="dp.toggleCalendar()"><i
+                                                    class="fas fa-calendar"></i></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="error text-danger"
+                                        *ngIf="createFormPost.controls.publish_date.dirty || createFormPost.controls.publish_date.touched">
+                                        <div *ngIf="createFormPost.controls.publish_date.hasError('required')">
+                                            Date is required
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Publish Time</label>
+                                    <div>
+
+                                        <input [ngxTimepicker]="picker" formControlName="publish_time"
+                                            class="form-control" [value]="minTime" [min]="minTime">
+                                        <ngx-material-timepicker #picker></ngx-material-timepicker>
+                                        <div class="error text-danger"
+                                            *ngIf="createFormPost.controls.publish_time.dirty || createFormPost.controls.publish_time.touched">
+                                            <div *ngIf="createFormPost.controls.publish_time.hasError('required')">
+                                                Time is required
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer" style="display: flex;justify-content: center;">
+                            <button type="button" (click)="onSave()" class="btn btn-primary btn-bg-gradient"
+                                [disabled]="requestSubmitClicked" data-dismiss="modal">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

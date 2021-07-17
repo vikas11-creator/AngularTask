@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card mb-3"  *ngFor="let userDetail of userDetails" (click)="postDetail(userDetail.id)">
+                <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                        <app-userimage></app-userimage>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Name: {{userDetail.name}}</h4>
+
+                        <h6 class="card-subtitle mb-3">Email: {{userDetail.email}}</h6>
+                       <h6 class="card-subtitle">Gender: {{userDetail.gender}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

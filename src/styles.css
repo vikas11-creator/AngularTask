@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+/* @import '~bootstrap/css/bootstrap'; */
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.timepicker-overlay{
+    z-index: 10000000 !important;
+}
+.timepicker-backdrop-overlay{
+    z-index: 10000000 !important;
+}
+@import '~@angular/material/theming';
